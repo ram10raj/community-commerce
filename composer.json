@@ -1,6 +1,6 @@
 {
     "name": "communitycommerce/module-charity",
-	"description": "A Magento 2 module donate the some amount to charity.",
+	"description": "A Magento 2 module donate the some amount to charity to some foundation.",
     "type": "magento2-module",
     "version": "1.0.1",
     "license": [
