@@ -1,0 +1,83 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+//echo $block->getCharityId();
+if($block->getProductCharityOptions()){
+?>
+<div class="block charity" id="block-charity" data-mage-init='{"collapsible":{"openedState": "active", "saveState": false}}'>
+    <div class="title" data-role="title">
+        <strong id="block-charity-heading" role="heading" aria-level="2"><?php /* @escapeNotVerified */ echo __('Select Charity you want to donate') ?></strong>
+    </div>
+    <div class="content" data-role="content" aria-labelledby="block-charity-heading">
+        <form id="charity-form"
+              action="<?php /* @escapeNotVerified */ echo $block->getUrl('communitycommerce/charity/charity') ?>"
+              method="post"
+              data-mage-init='{"charity":{"appyCharitySelector": "#charity_id",
+                                               "removeCharitySelector": "#remove-charity",
+                                               "applyCharityButton": "button.action.charity",
+                                               "cancelCharityButton": "button.action.charitycancel"}}'>
+            <div class="fieldset coupon <?php if($block->getCharityId()){ echo 'applied';}?>">
+            <input type="hidden" name="remove" id="remove-charity" value="0" />
+			<?php //echo $block->getBlockHtml('formkey') ?>
+                <div class="field">
+                    <div class="control">
+						 <select id="charity_id" name="charity_id">
+								<option value="">select</option>
+							<?php foreach ($block->getAllCharity() as $charity): ?>
+								<option value="<?php /* @escapeNotVerified */ echo $charity['id'] ?>" <?php if($charity['id'] == $block->getCharityId()){ echo "selected"; } ?> ><?php /* @escapeNotVerified */ echo $charity['charity_name']; ?></option>
+							<?php endforeach; ?>
+						  </select>
+                    </div>
+                </div>
+                <div class="actions-toolbar">
+                    <?php if($block->getCharityId()){ ?>
+					<?php $Details =  $block->getCharityDetails(); ?>
+					<!--Start charity Information -->
+						<div class="charity-details ">
+							<a href="javascript:void(0)" id="CHToggle">VIEW MORE</a>
+							<div class="CHInfo CHhide">
+								<div class="charity-div-title">
+									<span class="charity-left-title">Charity Name : </span>	 
+									<span class="charity-right-title"><?php echo $Details->getCharityName();?><span>
+								</div>
+								<div class="charity-div-desc">
+									<span class="charity-left-desc">Charity Description : </span>	 
+									<span class="charity-right-desc"><?php echo $Details->getDescription();?><span>
+								</div>
+							</div>
+						</div>
+					<!--end charity Information -->
+                        <div class="primary">
+                            <button  type="button" class="action charitycancel primary" value="<?php /* @escapeNotVerified */ echo __('Cancel Charity') ?>"><span><?php /* @escapeNotVerified */ echo __('Cancel Charity') ?></span></button>
+                        </div>
+                    <?php } ?>
+					<div class="primary">
+                        <button class="action charity primary" type="button" value="<?php /* @escapeNotVerified */ echo __('Apply Charity') ?>">
+                            <span><?php /* @escapeNotVerified */ echo __('Apply Charity') ?></span>
+                        </button>
+                    </div>
+                    <?php //endif; ?>
+                </div>
+            </div>
+        </form>			
+    </div>
+	
+</div>
+<script>
+    require([
+        'jquery'
+    ], function($){
+    	$('#CHToggle').on('click', function(e){
+			e.preventDefault();
+			$('.CHInfo').toggleClass('CHhide');
+		});
+      });
+ </script>
+<?php } ?>
